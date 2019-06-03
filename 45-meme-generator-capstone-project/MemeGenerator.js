@@ -10,9 +10,22 @@ class MemeGenerator extends Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({loading: true})
+    fetch("https://api.imgflip.com/get_memes")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          loading: false,
+          allMemeImgs: [response.data.memes]
+        })
+      })
+  }
+
   render() {
+    const memeImgs = this.state.loading ? "loading..." : this.state.allMemeImgs
     return (
-      <h1>MEME GENERATOR SECTION</h1>
+      <div>{memeImgs}</div>
     )
   }
 }

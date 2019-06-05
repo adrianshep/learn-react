@@ -1,33 +1,31 @@
 import React, {Component} from "react";
 
 class MemeGenerator extends Component {
-  constructor() {
-    super();
-    this.state = {
-      topText: "",
-      bottomText: "",
-      randomImage: "http://i.imgflip.com/1bij.jpg"
+    constructor() {
+        super();
+        this.state = {
+            topText: "",
+            bottomText: "",
+            randomImg: "http://i.imgflip.com/1bij.jpg",
+            allMemeImgs: []
+        }
     }
-  }
 
-  componentDidMount() {
-    this.setState({loading: true})
-    fetch("https://api.imgflip.com/get_memes")
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          loading: false,
-          allMemeImgs: [response.data.memes]
-        })
-      })
-  }
+    componentDidMount() {
+        fetch("https://api.imgflip.com/get_memes")
+            .then(response => response.json())
+            .then(response => {
+                const {memes} = response.data;
+                console.log(memes[0]);
+                this.setState({ allMemeImgs: memes });
+            })
+    }
 
-  render() {
-    const memeImgs = this.state.loading ? "loading..." : this.state.allMemeImgs
-    return (
-      <div>{memeImgs}</div>
-    )
-  }
+    render() {
+        return (
+            <h1>MEME GENERATOR SECTION</h1>;
+        )
+    }
 }
 
 export default MemeGenerator;
